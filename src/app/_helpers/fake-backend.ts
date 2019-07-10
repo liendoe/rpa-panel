@@ -16,6 +16,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         return of(null).pipe(mergeMap(() => {
 
             // authenticate
+            /*
             if (request.url.endsWith('/users/authenticate') && request.method === 'POST') {
                 // find if any user matches login credentials
                 let filteredUsers = users.filter(user => {
@@ -38,11 +39,12 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                     // else return 400 bad request
                     return throwError({ error: { message: 'Username or password is incorrect' } });
                 }
-            }
+            }*/
 
             // get users
             if (request.url.endsWith('/users') && request.method === 'GET') {
-                // check for fake auth token in header and return users if valid, this security is implemented server side in a real application
+                // check for fake auth token in header and return users if valid,
+                // this security is implemented server side in a real application
                 if (request.headers.get('Authorization') === 'Bearer fake-jwt-token') {
                     return of(new HttpResponse({ status: 200, body: users }));
                 } else {
@@ -53,7 +55,8 @@ export class FakeBackendInterceptor implements HttpInterceptor {
 
             // get user by id
             if (request.url.match(/\/users\/\d+$/) && request.method === 'GET') {
-                // check for fake auth token in header and return user if valid, this security is implemented server side in a real application
+                // check for fake auth token in header and return user if valid, 
+                // this security is implemented server side in a real application
                 if (request.headers.get('Authorization') === 'Bearer fake-jwt-token') {
                     // find user by id in users array
                     let urlParts = request.url.split('/');

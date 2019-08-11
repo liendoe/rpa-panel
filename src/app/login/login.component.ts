@@ -20,16 +20,17 @@ export class LoginComponent implements OnInit {
         private alertService: AlertService
     ) {
         // redirect to home if already logged in
-        if (this.authenticationService.currentUserValue) {
-            this.router.navigate(['/']);
+        if (this.authenticationService.currentUserValue && this.authenticationService.currentTokenValue) {
+            // this.router.navigate(['/']);
         }
     }
 
     ngOnInit() {
         this.loginForm = this.formBuilder.group({
-            username: ['', Validators.required],
-            password: ['', Validators.required]
+            username: ['liendoe2@gmail.com', Validators.required],
+            password: ['123456', Validators.required]
         });
+        
         // get return url from route parameters or default to '/'
         this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
     }
@@ -44,12 +45,15 @@ export class LoginComponent implements OnInit {
         if (this.loginForm.invalid) {
             return;
         }
+        console.log((new Date()).toISOString() + ' - Login OnSubmit');
 
         this.loading = true;
-        this.authenticationService.login(this.f.username.value, this.f.password.value)
+        this.authenticationService
+            .login(this.f.username.value, this.f.password.value)
             .pipe(first())
             .subscribe(
-                data => {
+                response => {
+                    console.log((new Date()).toISOString() + ' - Login Done');
                     this.router.navigate([this.returnUrl]);
                 },
                 error => {

@@ -19,17 +19,19 @@ export class RegisterComponent implements OnInit {
         private alertService: AlertService
     ) { 
         // redirect to home if already logged in
-        if (this.authenticationService.currentUserValue) { 
+        if (this.authenticationService.currentUserValue && this.authenticationService.currentTokenValue) { 
             this.router.navigate(['/']);
         }
     }
 
     ngOnInit() {
         this.registerForm = this.formBuilder.group({
-            firstName: ['', Validators.required],
-            lastName: ['', Validators.required],
-            username: ['', Validators.required],
-            password: ['', [Validators.required, Validators.minLength(6)]]
+            firstname: ['Eduardo2', Validators.required],
+            lastname: ['Liendo', Validators.required],
+            email:['liendoe2@gmail.com', [Validators.required, Validators.email]],
+            username: ['liendoe2', Validators.required],
+            phone: ['034646662616', [Validators.required, Validators.minLength(12)]],
+            password: ['123456', [Validators.required, Validators.minLength(6)]]
         });
     }
 
@@ -52,7 +54,7 @@ export class RegisterComponent implements OnInit {
                     this.alertService.success('Registration successful', true);
                     this.router.navigate(['/login']);
                 },
-                error => {
+                (error) => {
                     this.alertService.error(error);
                     this.loading = false;
                 });

@@ -1,12 +1,12 @@
-﻿import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { first } from 'rxjs/operators';
 
 import { User } from '@app/_models';
 import { UserService, AuthenticationService } from '@app/_services';
 
-@Component({ templateUrl: 'home.component.html' })
-export class HomeComponent implements OnInit, OnDestroy {
+@Component({ templateUrl: 'users.component.html' })
+export class UsersComponent implements OnInit, OnDestroy {
     currentUser: User;
     currentUserSubscription: Subscription;
     users: User[] = [];
@@ -21,6 +21,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
+        // console.log('onInit HOME!');
         this.loadAllUsers();
     }
 
@@ -34,9 +35,15 @@ export class HomeComponent implements OnInit, OnDestroy {
             this.loadAllUsers()
         });
     }
+    editUser(id: number){
+        // this.userService.delete(id).pipe(first()).subscribe(() => {
+        //     this.loadAllUsers()
+        // });
+    }
 
     private loadAllUsers() {
         this.userService.getAll().pipe(first()).subscribe(users => {
+            console.log(users);
             this.users = users;
         });
     }

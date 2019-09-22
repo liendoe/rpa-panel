@@ -13,6 +13,7 @@ import { AlertComponent } from './_components';
 import { JwtInterceptor, ErrorInterceptor } from './_helpers';
 import { HomeComponent } from './home';
 import { LoginComponent } from './login';
+import { UsersComponent } from './users';
 import { RegisterComponent } from './register';
 
 @NgModule({
@@ -27,6 +28,7 @@ import { RegisterComponent } from './register';
         AlertComponent,
         HomeComponent,
         LoginComponent,
+        UsersComponent,
         RegisterComponent
     ],
     providers: [
